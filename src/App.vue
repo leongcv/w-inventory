@@ -2,7 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router';
 import Breadcrumbs from './components/Breadcrumbs.vue';
 import TopHeader from './components/TopHeader.vue';
-import router, { routes } from './router';
+import { routes } from './router';
 </script>
 
 <template>
@@ -19,7 +19,7 @@ import router, { routes } from './router';
       <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
         <ul class="menu p-4 w-80 bg-base-200 text-base-content">
-          <li v-for="route in routes">
+          <li v-for="route in routes" :key="route.path">
             <RouterLink :to="route">{{ route.title }}</RouterLink>
           </li>
         </ul>
