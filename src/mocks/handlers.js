@@ -32,7 +32,7 @@ export const handlers = [
       }),
     )
   }),
-  
+
   // Handles a GET /apartments request
   rest.get('/apartments', (req, res, ctx) => {
     // Check if the user is authenticated in this session
@@ -49,43 +49,45 @@ export const handlers = [
     // If authenticated, return a mocked user details
     return res(
       ctx.status(200),
-      ctx.json({
-        id: 1,
-        name: 'HDB',
-        address: '259C Punggol Field',
-        floor: '#01',
-        doorNo: '001',
-      }, {
-        id: 2,
-        name: 'HDB',
-        address: '233 Simei Road',
-        floor: '#02',
-        doorNo: '222',
-      }, {
-        id: 3,
-        name: 'HDB',
-        address: '175A Yishun Street 21',
-        floor: '#08',
-        doorNo: '254',
-      }, {
-        id: 4,
-        name: 'HDB',
-        address: '745 Woodlands Circle',
-        floor: '#12',
-        doorNo: '275',
-      }, {
-        id: 5,
-        name: 'HDB',
-        address: '201 Bishan Street 23',
-        floor: '#05',
-        doorNo: '342',
-      }, {
-        id: 6,
-        name: 'HDB',
-        address: '133 Jalan Bukit Merah',
-        floor: '#02',
-        doorNo: '536',
-      }),
+      ctx.json([
+        {
+          id: 1,
+          name: 'HDB',
+          address: '259C Punggol Field',
+          floor: '#01',
+          doorNo: '001',
+        }, {
+          id: 2,
+          name: 'HDB',
+          address: '233 Simei Road',
+          floor: '#02',
+          doorNo: '222',
+        }, {
+          id: 3,
+          name: 'HDB',
+          address: '175A Yishun Street 21',
+          floor: '#08',
+          doorNo: '254',
+        }, {
+          id: 4,
+          name: 'HDB',
+          address: '745 Woodlands Circle',
+          floor: '#12',
+          doorNo: '275',
+        }, {
+          id: 5,
+          name: 'HDB',
+          address: '201 Bishan Street 23',
+          floor: '#05',
+          doorNo: '342',
+        }, {
+          id: 6,
+          name: 'HDB',
+          address: '133 Jalan Bukit Merah',
+          floor: '#02',
+          doorNo: '536',
+        }
+      ]),
     )
   }),
 ]

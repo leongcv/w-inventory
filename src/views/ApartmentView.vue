@@ -6,12 +6,11 @@ import ApartmentItem from '../components/ApartmentItem.vue'
 const msg = reactive('Apartment!');
 const loading = reactive(false);
 const error = reactive(null);
-const apartments = reactive(null);
-const getApartments = await fetch(`/apartments`).then((r) => r.json()).then(data => apartments = data)
+let apartments = reactive(null);
 
-onMounted = () => {
-  getApartments();
-}
+onMounted(() => {
+  fetch(`/apartments`).then((r) => r.json()).then(data => apartments = data)
+})
 </script>
 
 <template>
