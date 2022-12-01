@@ -10,7 +10,7 @@
         <IconRefresh />
       </button>
       <div class="btn-group btn-group-vertical lg:btn-group-horizontal">
-        <button class="btn btn-sm">Add</button>
+        <button class="btn btn-sm">Add item</button>
       </div>
     </div>
     <table class="table w-full">
@@ -27,7 +27,7 @@
         <tr v-if="data.inventoryList.length === 0">
           <td colspan="4" class="text-center">
             No items found.<br />
-            <button class="btn btn-xs mt-2">Add new items</button>
+            <button class="btn btn-sm mt-2">Add item</button>
           </td>
         </tr>
         <tr v-for="inventory, i in data.inventoryList" :key="inventory.id">
