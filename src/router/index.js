@@ -1,34 +1,48 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import ApartmentView from '../views/ApartmentView.vue'
-import InventoryView from '../views/InventoryView.vue'
+import ApartmentView from '@/views/ApartmentView.vue'
+import ApartmentDetailView from '@/views/ApartmentDetailView.vue'
 
-export const routes = [
+
+export const topNavigation = [
+]
+
+export const leftNavigation = [
   {
     path: '/',
     name: 'apartment',
-    title: 'Apartment',
-    component: ApartmentView
-  },
-  {
-    path: '/inventory',
-    name: 'inventory',
-    title: 'Inventory',
-    component: InventoryView
+    alias: '/apartment',
+    component: ApartmentView,
+    meta: {
+      title: 'Apartment',
+    }
   },
   {
     path: '/about',
     name: 'about',
-    title: 'About',
     // route level code-splitting
     // this generates a separate chunk (About.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/AboutView.vue')
+    component: () => import('../views/AboutView.vue'),
+    meta: {
+      title: 'About',
+    }
   }
+]
+
+const otherRoutes = [
+  {
+    path: '/apartment/:id',
+    name: 'apartment-detail',
+    component: ApartmentDetailView,
+    meta: {
+      title: 'Apartment\'s Inventory',
+    }
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes, 
+  routes: topNavigation.concat(leftNavigation.concat(otherRoutes)),
 })
 
 export default router

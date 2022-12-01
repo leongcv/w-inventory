@@ -1,39 +1,61 @@
 <script setup>
-import { reactive, ref } from 'vue'
-import { onMounted } from '@vue/runtime-core';
-import ApartmentItem from '../components/ApartmentItem.vue'
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import IconRefresh from '@/components/icons/IconRefresh.vue';
+import { computed } from '@vue/reactivity';
 
-const msg = reactive('Apartment!');
-const loading = reactive(false);
-const error = reactive(null);
-let apartments = reactive(null);
+const router = useRouter();
+const data = reactive({});
 
-onMounted(() => {
-  fetch(`/apartments`).then((r) => r.json()).then(data => apartments = data)
+fetchData();
+
+async function fetchData() {
+  data.apartments = null;
+  fetch(`/apartments`).then((r) => r.json()).then(d => data.apartments = d);
+}
+
+const goToInventoryList = (id) => {
+  router.push(`/apartment/${id}`)
+}
+
+const fullAddress = computed(() => {
+
 })
 </script>
 
 <template>
   <div class="apartment">
-    <h1>Apartment List</h1>
+    <div class="overflow-x-auto">
+      <div v-if="!data.apartments" class="my-8 text-center">
+        <progress class="progress w-56"></progress>
+      </div>
+      <div v-else>
+        <div class="w-full flex flex-row-reverse mb-2">
+          <button class="btn btn-sm btn-ghost btn-circle" @click="fetchData" title="Refresh">
+            <IconRefresh />
+          </button>
+        </div>
+        <table class="table w-full">
+          <!-- head -->
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Full Address</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="apartment, i in data.apartments" :key="apartment.id">
+              <th>{{ i + 1 }}</th>
+              <td>{{ apartment.name }}</td>
+              <td>{{ apartment.address + ' ' + apartment.floor + '-' + apartment.doorNo }}</td>
+              <td><button class="btn btn-ghost btn-xs" @click="goToInventoryList(apartment.id)">manage</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-    <div v-if="loading" class="loading">Loading...</div>
-
-    <div v-if="error" class="error">{{ error }}</div>
-
-    <ul>
-      <li v-for="apartment in apartments" :key="apartment.id">
-      {{ apartment.id + ' | ' + apartment.name + ' @ ' + apartment.address }}</li>
-    </ul>
-
-    <!-- <h2>{{ msg }}</h2> -->
-    <!-- <div v-if="post" class="content">
-      <h2>{{ msg }}</h2>
-    </div> -->
   </div>
 </template>
-  
-<style>
-.apartment {
-}
-</style>
