@@ -238,14 +238,25 @@ export const handlers = [
     const apartmentId = req.url.searchParams.get('id');
     let inventoryList = INVENTORY_LIST.filter(i => i.apartmentId === Number(apartmentId));
     inventoryList.sort((a, b) => sortByProp(a, b, 'item'));
-    // const inventoryList = INVENTORY_LIST.filter(i => i.apartmentId === Number(apartmentId)).sort((a, b) => { stringSort(a, b, 'item')})
 
-    // If authenticated, return a mocked user details
     return res(
       // Delays response for 2000ms.
       ctx.delay(2000),
       ctx.status(200),
       ctx.json(inventoryList),
+    )
+  }),
+
+  // Handles a GET /inventory?id request
+  rest.get('/inventory', (req, res, ctx) => {
+    const inventoryId = req.url.searchParams.get('id');
+    let inventoryItem = INVENTORY_LIST.find(i => i.id === Number(inventoryId));
+
+    return res(
+      // Delays response for 2000ms.
+      ctx.delay(2000),
+      ctx.status(200),
+      ctx.json(inventoryItem),
     )
   }),
 

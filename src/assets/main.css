@@ -11,3 +11,13 @@
     @apply text-xl mb-2;
   }
 }
+
+@layer components {
+  .container {
+    @apply max-w-6xl;
+  }
+}
+
+.inventory-form {
+  min-height: calc(100vh - 360px);
+}

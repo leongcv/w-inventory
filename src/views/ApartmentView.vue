@@ -50,7 +50,12 @@ const fullAddress = computed(() => {
               <th>{{ i + 1 }}</th>
               <td>{{ apartment.name }}</td>
               <td>{{ apartment.address + ' ' + apartment.floor + '-' + apartment.doorNo }}</td>
-              <td><button class="btn btn-ghost btn-xs" @click="goToInventoryList(apartment.id)">manage</button></td>
+              <td>
+                <div class="w-full flex gap-2 justify-end">
+                  <button class="btn btn-ghost btn-xs text-blue-500"
+                  @click="goToInventoryList(apartment.id)">manage</button>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>

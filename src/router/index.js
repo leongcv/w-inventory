@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ApartmentView from '@/views/ApartmentView.vue'
 import ApartmentDetailView from '@/views/ApartmentDetailView.vue'
+import InventoryEditView from '@/views/InventoryEditView.vue'
 
 
 export const topNavigation = [
@@ -36,6 +37,14 @@ const otherRoutes = [
     component: ApartmentDetailView,
     meta: {
       title: 'Apartment\'s Inventory',
+    }
+  },
+  {
+    path: '/inventory/:id/edit',
+    name: 'inventory-edit',
+    component: InventoryEditView,
+    meta: {
+      title: 'Edit Inventory',
     }
   },
 ]

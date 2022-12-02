@@ -1,17 +1,20 @@
 <template>
-  <h2>{{ apartmentTitle }}</h2>
-
   <div v-if="!data.inventoryList" class="my-8 text-center">
     <progress class="progress w-56"></progress>
   </div>
   <div v-else>
-    <div class="w-full flex flex-row-reverse gap-2 mb-2">
+    <div class="w-full flex gap-2 mb-2">
+      <div class="flex-1">
+        <h2>{{ apartmentTitle }}</h2>
+      </div>
+      <div class="btn-group btn-group-vertical lg:btn-group-horizontal">
+        <button class="btn btn-sm">
+          <IconPlusSmallVue /><span class="hidden md:inline">Add item</span>
+        </button>
+      </div>
       <button class="btn btn-sm btn-ghost btn-circle" @click="fetchData" title="Refresh">
         <IconRefresh />
       </button>
-      <div class="btn-group btn-group-vertical lg:btn-group-horizontal">
-        <button class="btn btn-sm">Add item</button>
-      </div>
     </div>
     <table class="table w-full">
       <!-- head -->
@@ -27,7 +30,9 @@
         <tr v-if="data.inventoryList.length === 0">
           <td colspan="4" class="text-center">
             No items found.<br />
-            <button class="btn btn-sm mt-2">Add item</button>
+            <button class="btn btn-sm mt-2">
+              <IconPlusSmallVue />Add item
+            </button>
           </td>
         </tr>
         <tr v-for="inventory, i in data.inventoryList" :key="inventory.id">
@@ -35,7 +40,10 @@
           <td>{{ inventory.item }}</td>
           <td>{{ inventory.quantity }}</td>
           <td>
-            <!-- <button class="btn btn-ghost btn-xs" @click="goToInventoryList(apartment.id)">manage</button> -->
+            <div class="w-full flex gap-2 justify-end">
+              <button class="btn btn-ghost btn-xs text-blue-500" @click="goToInventoryEdit(inventory.id)">edit</button>
+              <button class="btn btn-ghost btn-xs text-red-500" @click="">delete</button>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -46,10 +54,12 @@
 <script setup>
 import { computed } from '@vue/reactivity';
 import { reactive } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import IconRefresh from '@/components/icons/IconRefresh.vue';
+import IconPlusSmallVue from '@/components/icons/IconPlusSmall.vue';
 
 const route = useRoute();
+const router = useRouter();
 const data = reactive({});
 
 fetchData();
@@ -65,5 +75,9 @@ async function fetchData() {
 const apartmentTitle = computed(() => {
   return data?.apartment?.name ?? ''
 })
+
+const goToInventoryEdit = (id) => {
+  router.push(`/inventory/${id}/edit`)
+}
 
 </script>
