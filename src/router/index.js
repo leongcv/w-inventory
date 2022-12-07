@@ -17,17 +17,6 @@ export const leftNavigation = [
       title: 'Apartment',
     }
   },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import('../views/AboutView.vue'),
-    meta: {
-      title: 'About',
-    }
-  }
 ]
 
 const otherRoutes = [
@@ -35,14 +24,25 @@ const otherRoutes = [
     path: '/apartment/:id',
     name: 'apartment-detail',
     component: ApartmentDetailView,
+    props: true,
     meta: {
       title: 'Apartment\'s Inventory',
+    }
+  },
+  {
+    path: '/apartment/:id/inventory/add',
+    name: 'inventory-add',
+    component: InventoryEditView,
+    props: true,
+    meta: {
+      title: 'Add Inventory',
     }
   },
   {
     path: '/inventory/:id/edit',
     name: 'inventory-edit',
     component: InventoryEditView,
+    props: true,
     meta: {
       title: 'Edit Inventory',
     }

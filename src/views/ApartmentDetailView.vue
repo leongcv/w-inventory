@@ -7,8 +7,8 @@
       <div class="flex-1">
         <h2>{{ apartmentTitle }}</h2>
       </div>
-      <div class="btn-group btn-group-vertical lg:btn-group-horizontal">
-        <button class="btn btn-sm">
+      <div v-if="(data.inventoryList?.length < 20)" class="btn-group btn-group-vertical lg:btn-group-horizontal">
+        <button class="btn btn-sm" @click="goToInventoryAdd">
           <IconPlusSmallVue /><span class="hidden md:inline">Add item</span>
         </button>
       </div>
@@ -30,7 +30,7 @@
         <tr v-if="data.inventoryList.length === 0">
           <td colspan="4" class="text-center">
             No items found.<br />
-            <button class="btn btn-sm mt-2">
+            <button class="btn btn-sm mt-2" @click="goToInventoryAdd">
               <IconPlusSmallVue />Add item
             </button>
           </td>
@@ -42,7 +42,7 @@
           <td>
             <div class="w-full flex gap-2 justify-end">
               <button class="btn btn-ghost btn-xs text-blue-500" @click="goToInventoryEdit(inventory.id)">edit</button>
-              <button class="btn btn-ghost btn-xs text-red-500" @click="">delete</button>
+              <button class="btn btn-ghost btn-xs text-red-500" @click="deleteInventory(inventory.id)">delete</button>
             </div>
           </td>
         </tr>
@@ -52,11 +52,14 @@
 </template>
   
 <script setup>
-import { computed } from '@vue/reactivity';
-import { reactive } from 'vue';
+import { reactive, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import IconRefresh from '@/components/icons/IconRefresh.vue';
 import IconPlusSmallVue from '@/components/icons/IconPlusSmall.vue';
+
+const props = defineProps({
+  id: String
+})
 
 const route = useRoute();
 const router = useRouter();
@@ -67,8 +70,22 @@ fetchData();
 async function fetchData() {
   data.apartment = null;
   data.inventoryList = null;
-  fetch(`/apartment?id=${route.params.id}`).then((r) => r.json()).then(d => data.apartment = d);
-  fetch(`/apartment/inventory?id=${route.params.id}`).then((r) => r.json()).then(d => data.inventoryList = d);
+  fetch(`/apartment?id=${props.id}`).then((r) => r.json()).then(d => data.apartment = d);
+  fetch(`/apartment/inventory?id=${props.id}`).then((r) => r.json()).then(d => data.inventoryList = d);
+}
+
+async function deleteInventory(idToDelete) {
+  // TODO: confirmation
+  fetch(`/inventory/delete`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id: idToDelete }),
+  }).then((r) => {
+    // TODO: Show success message
+    fetchData();
+  })
 }
 
 // Apartment title
@@ -78,6 +95,10 @@ const apartmentTitle = computed(() => {
 
 const goToInventoryEdit = (id) => {
   router.push(`/inventory/${id}/edit`)
+}
+
+const goToInventoryAdd = () => {
+  router.push({ name: 'inventory-add', params: { id: props.id } })
 }
 
 </script>

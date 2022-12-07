@@ -1,38 +1,39 @@
-import { rest } from 'msw'
+import { rest } from 'msw';
+import { v4 as uuidv4 } from 'uuid';
 
 const APARTMENT_LIST = [
   {
-    id: 1,
+    id: '1',
     name: 'HDB @ Punggol 259C',
     address: '259C Punggol Field',
     floor: '#01',
     doorNo: '001',
   }, {
-    id: 2,
+    id: '2',
     name: 'HDB @ Simei 233',
     address: '233 Simei Road',
     floor: '#02',
     doorNo: '222',
   }, {
-    id: 3,
+    id: '3',
     name: 'HDB @ Yishun 175A',
     address: '175A Yishun Street 21',
     floor: '#08',
     doorNo: '254',
   }, {
-    id: 4,
+    id: '4',
     name: 'HDB @ Woodlands 745',
     address: '745 Woodlands Circle',
     floor: '#12',
     doorNo: '275',
   }, {
-    id: 5,
+    id: '5',
     name: 'HDB @ Bishan 201',
     address: '201 Bishan Street 23',
     floor: '#05',
     doorNo: '342',
   }, {
-    id: 6,
+    id: '6',
     name: 'HDB @ Bukit Merah 133',
     address: '133 Jalan Bukit Merah',
     floor: '#02',
@@ -109,82 +110,82 @@ const INVENTORY_ITEM_LIST = [
   },
 ]
 
-const INVENTORY_LIST = [
+let InventoryList = [
   {
-    id: 1,
-    apartmentId: 1,
+    id: '1',
+    apartmentId: '1',
     item: 'Refrigerator',
     quantity: 1,
   },
   {
-    id: 2,
-    apartmentId: 1,
+    id: '2',
+    apartmentId: '1',
     item: 'Air-conditioner',
     quantity: 3,
   },
   {
-    id: 3,
-    apartmentId: 1,
+    id: '3',
+    apartmentId: '1',
     item: 'Sofa',
     quantity: 1,
   },
   {
-    id: 4,
-    apartmentId: 1,
+    id: '4',
+    apartmentId: '1',
     item: 'TV',
     quantity: 2,
   },
   {
-    id: 5,
-    apartmentId: 1,
+    id: '5',
+    apartmentId: '1',
     item: 'Dining table',
     quantity: 1,
   },
   {
-    id: 6,
-    apartmentId: 1,
+    id: '6',
+    apartmentId: '1',
     item: 'Dining chair',
     quantity: 4,
   },
   {
-    id: 7,
-    apartmentId: 1,
+    id: '7',
+    apartmentId: '1',
     item: 'Bed (Double)',
     quantity: 1,
   },
   {
-    id: 8,
-    apartmentId: 1,
+    id: '8',
+    apartmentId: '1',
     item: 'Bed (Single)',
     quantity: 1,
   },
   {
-    id: 9,
-    apartmentId: 1,
+    id: '9',
+    apartmentId: '1',
     item: 'Wardrobe',
     quantity: 2,
   },
   {
-    id: 10,
-    apartmentId: 3,
+    id: '10',
+    apartmentId: '3',
     item: 'Microwave oven',
     quantity: 1,
   },
   {
-    id: 11,
-    apartmentId: 3,
+    id: '11',
+    apartmentId: '3',
     item: 'Dining table',
     quantity: 1,
   },
   {
-    id: 12,
-    apartmentId: 3,
+    id: '12',
+    apartmentId: '3',
     item: 'Dining chair',
     quantity: 4,
   },
   {
-    id: 13,
-    apartmentId: 3,
+    id: '13',
+    apartmentId: '3',
     item: 'Curtain set',
     quantity: 5,
   },
@@ -222,7 +223,7 @@ export const handlers = [
   // Handles a GET /apartment?id request
   rest.get('/apartment', (req, res, ctx) => {
     const apartmentId = req.url.searchParams.get('id');
-    const apartment = APARTMENT_LIST.find(a => a.id === Number(apartmentId))
+    const apartment = APARTMENT_LIST.find(a => a.id === apartmentId)
 
     // If authenticated, return a mocked user details
     return res(
@@ -236,7 +237,7 @@ export const handlers = [
   // Handles a GET /apartment/inventory?id request
   rest.get('/apartment/inventory', (req, res, ctx) => {
     const apartmentId = req.url.searchParams.get('id');
-    let inventoryList = INVENTORY_LIST.filter(i => i.apartmentId === Number(apartmentId));
+    let inventoryList = InventoryList.filter(i => i.apartmentId === apartmentId);
     inventoryList.sort((a, b) => sortByProp(a, b, 'item'));
 
     return res(
@@ -250,7 +251,7 @@ export const handlers = [
   // Handles a GET /inventory?id request
   rest.get('/inventory', (req, res, ctx) => {
     const inventoryId = req.url.searchParams.get('id');
-    let inventoryItem = INVENTORY_LIST.find(i => i.id === Number(inventoryId));
+    let inventoryItem = InventoryList.find(i => i.id === inventoryId);
 
     return res(
       // Delays response for 2000ms.
@@ -262,11 +263,64 @@ export const handlers = [
 
   // Handles a GET /inventory-items request
   rest.get('/inventory-items', (req, res, ctx) => {
+    // Sort
+    let itemList = INVENTORY_ITEM_LIST.sort((a, b) => sortByProp(a, b, 'item'));
+
+    // Filter by apartment
+    const apartmentId = req.url.searchParams.get('apartmentId');
+    if (apartmentId) {
+      let filteredInventoryList = InventoryList.filter(i => i.apartmentId === apartmentId)
+      itemList = itemList.filter(item => !filteredInventoryList.some(inv => inv.item === item.name))
+    }
+
     return res(
-      // Delays response for 2000ms.
+      // Delays response for random amount of time.
       ctx.delay(),
       ctx.status(200),
-      ctx.json(INVENTORY_ITEM_LIST.sort((a, b) => sortByProp(a, b, 'item'))),
+      ctx.json(itemList),
+    )
+  }),
+
+  rest.post('/inventory/delete', (req, res, ctx) => {
+    req.json().then(data => {
+      InventoryList = InventoryList.filter(i => i.id !== data.id)
+    })
+
+    return res(
+      // Delays response for random amount of time.
+      ctx.delay(),
+      // Respond with a 200 status code
+      ctx.status(200),
+    )
+  }),
+
+  rest.post('/inventory/edit', (req, res, ctx) => {
+    // req.json().then(d => console.log('/inventory/edit', d))
+    req.json().then(data => {
+      InventoryList.find(i => i.id === data.id).quantity = data.quantity;
+    })
+
+    return res(
+      // Delays response for random amount of time.
+      ctx.delay(),
+      // Respond with a 200 status code
+      ctx.status(200),
+    )
+  }),
+
+  rest.post('/inventory/add', (req, res, ctx) => {
+    // req.json().then(d => console.log('/inventory/add', d))
+    req.json().then(data => {
+      data.id = uuidv4();
+      InventoryList.push(data);
+      console.log('After added: ', InventoryList)
+    })
+    
+    return res(
+      // Delays response for random amount of time.
+      ctx.delay(),
+      // Respond with a 200 status code
+      ctx.status(200),
     )
   }),
 ]
