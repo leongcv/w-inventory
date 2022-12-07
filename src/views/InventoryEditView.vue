@@ -133,7 +133,7 @@ const isPreview = () => currentStep.value === 2;
           <label class="label">
             <span class="label-text">Quantity</span>
           </label>
-          <input v-model="form.quantity" type="number" min="1" max="20" placeholder="Quantity"
+          <input v-model="form.quantity" type="number" min="1" max="20" inputmode="numeric" placeholder="Quantity"
             class="input w-full max-w-xs input-bordered" 
             :disabled="isPreview()" required />
         </div>
