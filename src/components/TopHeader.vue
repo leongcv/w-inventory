@@ -12,7 +12,7 @@
     <div class="flex-1">
       <a class="btn btn-ghost normal-case text-xl" @click="$router.push('/')">R Inventory</a>
     </div>
-    <div class="flex-none gap-2">
+    <!-- <div class="flex-none gap-2">
       <div class="form-control">
         <input type="text" placeholder="Search" class="input input-bordered" />
       </div>
@@ -33,7 +33,7 @@
           <li><a>Logout</a></li>
         </ul>
       </div>
-    </div>
+    </div> -->
   </header>
 </template>
 

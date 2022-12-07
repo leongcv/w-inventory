@@ -16,38 +16,41 @@
         <IconRefresh />
       </button>
     </div>
-    <table class="table w-full">
-      <!-- head -->
-      <thead>
-        <tr>
-          <th></th>
-          <th>Item</th>
-          <th>Quantity</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-if="data.inventoryList.length === 0">
-          <td colspan="4" class="text-center">
-            No items found.<br />
-            <button class="btn btn-sm mt-2" @click="goToInventoryAdd">
-              <IconPlusSmallVue />Add item
-            </button>
-          </td>
-        </tr>
-        <tr v-for="inventory, i in data.inventoryList" :key="inventory.id">
-          <th>{{ i + 1 }}</th>
-          <td>{{ inventory.item }}</td>
-          <td>{{ inventory.quantity }}</td>
-          <td>
-            <div class="w-full flex gap-2 justify-end">
-              <button class="btn btn-ghost btn-xs text-blue-500" @click="goToInventoryEdit(inventory.id)">edit</button>
-              <button class="btn btn-ghost btn-xs text-red-500" @click="deleteInventory(inventory.id)">delete</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="overflow-x-auto">
+      <table class="table w-full">
+        <!-- head -->
+        <thead>
+          <tr>
+            <th></th>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-if="data.inventoryList.length === 0">
+            <td colspan="4" class="text-center">
+              No items found.<br />
+              <button class="btn btn-sm mt-2" @click="goToInventoryAdd">
+                <IconPlusSmallVue />Add item
+              </button>
+            </td>
+          </tr>
+          <tr v-for="inventory, i in data.inventoryList" :key="inventory.id">
+            <th>{{ i + 1 }}</th>
+            <td>{{ inventory.item }}</td>
+            <td>{{ inventory.quantity }}</td>
+            <td>
+              <div class="w-full flex gap-2 justify-end">
+                <button class="btn btn-ghost btn-xs text-blue-500"
+                  @click="goToInventoryEdit(inventory.id)">edit</button>
+                <button class="btn btn-ghost btn-xs text-red-500" @click="deleteInventory(inventory.id)">delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
   

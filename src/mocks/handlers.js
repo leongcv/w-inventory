@@ -112,6 +112,147 @@ const INVENTORY_ITEM_LIST = [
 
 let InventoryList = [
   {
+      "id": "1",
+      "apartmentId": "1",
+      "item": "Refrigerator",
+      "quantity": 1
+  },
+  {
+      "id": "2",
+      "apartmentId": "1",
+      "item": "Air-conditioner",
+      "quantity": 4
+  },
+  {
+      "id": "3",
+      "apartmentId": "1",
+      "item": "Sofa",
+      "quantity": 1
+  },
+  {
+      "id": "4",
+      "apartmentId": "1",
+      "item": "TV",
+      "quantity": 2
+  },
+  {
+      "id": "5",
+      "apartmentId": "1",
+      "item": "Dining table",
+      "quantity": 1
+  },
+  {
+      "id": "6",
+      "apartmentId": "1",
+      "item": "Dining chair",
+      "quantity": 4
+  },
+  {
+      "id": "9",
+      "apartmentId": "1",
+      "item": "Wardrobe",
+      "quantity": 2
+  },
+  {
+      "id": "10",
+      "apartmentId": "3",
+      "item": "Microwave oven",
+      "quantity": 1
+  },
+  {
+      "id": "11",
+      "apartmentId": "3",
+      "item": "Dining table",
+      "quantity": 1
+  },
+  {
+      "id": "12",
+      "apartmentId": "3",
+      "item": "Dining chair",
+      "quantity": 4
+  },
+  {
+      "id": "13",
+      "apartmentId": "3",
+      "item": "Curtain set",
+      "quantity": 5
+  },
+  {
+      "id": "3187ad19-3e66-44bd-9324-5dd29ace7cb1",
+      "apartmentId": "1",
+      "item": "Bed (King)",
+      "quantity": 1
+  },
+  {
+      "id": "321b22b7-51e2-4309-bc4a-b3f118e08112",
+      "apartmentId": "1",
+      "item": "Book shelf (2x4)",
+      "quantity": 1
+  },
+  {
+      "id": "8228193f-a5d2-43e3-a39d-1f3ebf859b9f",
+      "apartmentId": "1",
+      "item": "Shoes rack",
+      "quantity": 1
+  },
+  {
+      "id": "623ca3ce-9126-4def-923d-9cb66426a7aa",
+      "apartmentId": "1",
+      "item": "Wooden stool",
+      "quantity": 1
+  },
+  {
+      "id": "483a24f6-25f7-4ae4-b340-5c8f123e0bda",
+      "apartmentId": "1",
+      "item": "Washing machine",
+      "quantity": 1
+  },
+  {
+      "id": "cbe70a8e-ce48-463a-9cd3-70adc1e8258a",
+      "apartmentId": "1",
+      "item": "Standing fan",
+      "quantity": 1
+  },
+  {
+      "id": "78e5a914-58a1-4f8f-8a4f-9dcbda97e71a",
+      "apartmentId": "1",
+      "item": "Network router",
+      "quantity": 1
+  },
+  {
+      "id": "e4e5f57a-493d-4d3e-880f-ab193dd2d658",
+      "apartmentId": "1",
+      "item": "Kettle",
+      "quantity": 1
+  },
+  {
+      "id": "0c78d652-85c2-4bbf-8aa5-1c8f227a9b6a",
+      "apartmentId": "1",
+      "item": "Book shelf (3x4)",
+      "quantity": 1
+  },
+  {
+      "id": "890bdbb5-196c-466e-adbe-f9cc17282604",
+      "apartmentId": "1",
+      "item": "Bed (Super Single)",
+      "quantity": 1
+  },
+  {
+      "id": "fad12073-0fbc-497e-845a-bfbd5326ab20",
+      "apartmentId": "1",
+      "item": "Bed (Single)",
+      "quantity": 1
+  },
+  {
+      "id": "fffdbca2-7d9b-4b53-9209-81f7b2bb5664",
+      "apartmentId": "1",
+      "item": "Bed (Queen)",
+      "quantity": 1
+  },
+]
+
+let InventoryList_old = [
+  {
     id: '1',
     apartmentId: '1',
     item: 'Refrigerator',

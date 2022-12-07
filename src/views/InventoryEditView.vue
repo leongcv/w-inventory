@@ -99,7 +99,7 @@ async function editInventory() {
   }).then((r) => {
     // Success & redirect
     goBackToApartmentDetails();
-  }) // .then(d => data.apartment = d);
+  })
 }
 
 const isPreview = () => currentStep.value === 2;
