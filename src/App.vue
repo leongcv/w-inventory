@@ -12,7 +12,7 @@ import { leftNavigation } from './router';
       <div class="drawer-content bg-base-100">
         <TopHeader />
         <div class="container p-4">
-          <Breadcrumbs />
+          <!-- <Breadcrumbs /> -->
           <h1>{{ $route.meta.title }}</h1>
           <RouterView />
         </div>
@@ -28,7 +28,3 @@ import { leftNavigation } from './router';
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>
